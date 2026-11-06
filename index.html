@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PromptForge · 提示词锻造厂</title>
+  <meta name="description" content="蒸汽朋克提示词锻造车间：扳动拨杆，选好配件，拉动熔炉拉杆，锻造属于你的 AI 提示词。" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- 车间背景齿轮 -->
+  <div class="machinery" aria-hidden="true">
+    <span class="gear g1"></span>
+    <span class="gear g2"></span>
+    <span class="gear g3"></span>
+    <span class="pipe p1"></span>
+    <span class="pipe p2"></span>
+  </div>
+
+  <!-- ═══ 厂牌铭牌 ═══ -->
+  <header class="plate">
+    <div class="rivet r-tl"></div><div class="rivet r-tr"></div>
+    <div class="rivet r-bl"></div><div class="rivet r-br"></div>
+    <div class="plate-row">
+      <span class="gear-mini"></span>
+      <h1>Prompt Forge</h1>
+      <span class="gear-mini rev"></span>
+    </div>
+    <p class="plate-sub">— 提示词锻造厂 · EST. 2026 —</p>
+    <div class="gauge">
+      <div class="gauge-face"><span class="needle" id="gNeedle"></span></div>
+      <span class="gauge-label">炉压 <b id="gVal">0</b> PSI</span>
+    </div>
+  </header>
+
+  <main class="workshop">
+
+    <!-- ═══ 配件库：四组机械拨杆 ═══ -->
+    <section class="rig">
+      <h2 class="rig-title"><span class="bolt"></span>01 · 选角色模块</h2>
+      <div class="switchboard" id="board-role"></div>
+
+      <h2 class="rig-title"><span class="bolt"></span>02 · 选任务模块</h2>
+      <div class="switchboard" id="board-task"></div>
+
+      <h2 class="rig-title"><span class="bolt"></span>03 · 选风格模块</h2>
+      <div class="switchboard" id="board-style"></div>
+
+      <h2 class="rig-title"><span class="bolt"></span>04 · 加约束模块</h2>
+      <div class="switchboard" id="board-constraint"></div>
+    </section>
+
+    <!-- ═══ 熔炉区 ═══ -->
+    <section class="furnace">
+      <div class="furnace-frame">
+        <div class="rivet r-tl"></div><div class="rivet r-tr"></div>
+        <div class="rivet r-bl"></div><div class="rivet r-br"></div>
+
+        <h2 class="furnace-title">熔 炉 输 出 台</h2>
+
+        <!-- 电报纸输出 -->
+        <div class="tape-wrap">
+          <div class="tape-sprockets"></div>
+          <pre class="tape" id="tape">【等待锻造】拉动下方拉杆，开始锻造你的提示词…</pre>
+        </div>
+
+        <!-- 拉杆 -->
+        <div class="lever-zone">
+          <div class="lever-slot"></div>
+          <button class="lever" id="lever" title="拉下锻造">
+            <span class="lever-arm"></span>
+            <span class="lever-knob"></span>
+          </button>
+          <span class="lever-tag">锻 造 拉 杆</span>
+        </div>
+
+        <!-- 铭刻按钮 -->
+        <div class="stamp-row">
+          <button class="stamp-btn" id="copyBtn">拓印 · 复制全文</button>
+          <button class="stamp-btn warn" id="resetBtn">回炉 · 全部重置</button>
+        </div>
+      </div>
+
+      <!-- 锻造计数 -->
+      <div class="counter">
+        <span class="counter-wheel" id="cw1">0</span>
+        <span class="counter-wheel" id="cw2">0</span>
+        <span class="counter-wheel" id="cw3">0</span>
+        <span class="counter-cap">本厂累计锻造件数</span>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

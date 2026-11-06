@@ -1,0 +1,295 @@
+/* ═════════════════════════════════════════════
+   PromptForge · 蒸汽朋克提示词锻造厂
+   ═════════════════════════════════════════════ */
+:root {
+  --iron-0: #16120c;
+  --iron-1: #221b12;
+  --brass: #c89b3c;
+  --brass-hi: #f0c46a;
+  --copper: #b05f2e;
+  --rust: #8a4b26;
+  --paper: #e8d9b0;
+  --ink: #3b2b16;
+  --steam: #d8c9a5;
+  --mono: "Courier New", Courier, monospace;
+  --disp: "STZhongsong", "SimSun", serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--mono);
+  background:
+    radial-gradient(ellipse at 50% -10%, #3a2c17 0%, transparent 55%),
+    var(--iron-0);
+  color: var(--steam);
+  min-height: 100vh;
+  padding: 26px 16px 40px;
+  overflow-x: hidden;
+}
+
+/* ---------- 背景机械 ---------- */
+.machinery { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.gear {
+  position: absolute; border-radius: 50%;
+  background: conic-gradient(#2a2013 0deg 20deg, #1a1409 20deg 40deg);
+  border: 3px solid #3d2f1a;
+  opacity: 0.55;
+}
+.gear::after {
+  content: ""; position: absolute; inset: 28%;
+  border-radius: 50%; background: #16110a;
+}
+.g1 { width: 340px; height: 340px; top: -120px; right: -110px; animation: turn 40s linear infinite; }
+.g2 { width: 180px; height: 180px; bottom: 8%; left: -70px; animation: turn 26s linear infinite reverse; }
+.g3 { width: 90px; height: 90px; top: 42%; right: 4%; animation: turn 18s linear infinite; }
+@keyframes turn { to { transform: rotate(360deg); } }
+
+.pipe {
+  position: absolute; background: linear-gradient(#3a2c15, #241a0d);
+  border-radius: 6px;
+}
+.p1 { width: 46vw; height: 16px; top: 130px; left: -20px; transform: rotate(-3deg); }
+.p2 { width: 34vw; height: 12px; bottom: 60px; right: -20px; transform: rotate(2.5deg); }
+
+/* ---------- 铆钉 ---------- */
+.rivet {
+  position: absolute; width: 14px; height: 14px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--brass-hi), var(--rust) 70%);
+  z-index: 2;
+}
+.r-tl { top: 7px; left: 7px; } .r-tr { top: 7px; right: 7px; }
+.r-bl { bottom: 7px; left: 7px; } .r-br { bottom: 7px; right: 7px; }
+
+/* ---------- 厂牌铭牌 ---------- */
+.plate {
+  position: relative; z-index: 1;
+  max-width: 980px; margin: 0 auto 30px;
+  padding: 22px 26px;
+  background: linear-gradient(160deg, #352814, #241a0d 60%, #2e2210);
+  border: 3px solid var(--brass);
+  border-radius: 10px;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(240, 196, 106, 0.25);
+  text-align: center;
+}
+.plate-row { display: flex; align-items: center; justify-content: center; gap: 18px; }
+.plate h1 {
+  font-family: var(--disp);
+  font-size: clamp(26px, 5vw, 42px); letter-spacing: 8px;
+  color: var(--brass-hi);
+  text-shadow: 0 2px 0 #6b4a12, 0 0 26px rgba(240, 196, 106, 0.4);
+}
+.gear-mini {
+  width: 26px; height: 26px; flex: none; border-radius: 50%;
+  background: conic-gradient(var(--brass) 0deg 30deg, var(--rust) 30deg 60deg);
+  animation: turn 9s linear infinite;
+}
+.gear-mini.rev { animation-direction: reverse; }
+.plate-sub { font-size: 12px; letter-spacing: 5px; color: var(--copper); margin-top: 6px; }
+
+/* 压力表 */
+.gauge { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 14px; }
+.gauge-face {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: radial-gradient(circle, #efe2bd 40%, var(--paper) 70%, #c9b485);
+  border: 5px solid var(--brass);
+  position: relative;
+  box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.25);
+}
+.needle {
+  position: absolute; left: 50%; bottom: 50%;
+  width: 3px; height: 24px; background: #7a1e12;
+  transform-origin: bottom center;
+  transform: translateX(-50%) rotate(-120deg);
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.gauge-label { font-size: 12px; color: var(--copper); letter-spacing: 1px; }
+.gauge-label b { color: var(--brass-hi); font-size: 15px; }
+
+/* ---------- 车间主布局 ---------- */
+.workshop {
+  position: relative; z-index: 1;
+  max-width: 980px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+}
+@media (max-width: 860px) { .workshop { grid-template-columns: 1fr; } }
+
+/* ---------- 拨杆配电板 ---------- */
+.rig {
+  padding: 20px 22px;
+  background: linear-gradient(#241b0e, #1c150a);
+  border: 2px solid #4d3a1c;
+  border-radius: 12px;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5);
+}
+.rig-title {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--disp); font-size: 15px; letter-spacing: 3px;
+  color: var(--brass-hi); margin: 18px 0 12px;
+}
+.rig-title:first-child { margin-top: 0; }
+.bolt {
+  width: 12px; height: 12px; border-radius: 50%; flex: none;
+  background: radial-gradient(circle at 35% 30%, var(--brass-hi), var(--rust) 70%);
+}
+
+.switchboard { display: flex; flex-direction: column; gap: 8px; }
+
+/* 机械拨杆行 */
+.switch {
+  display: flex; align-items: center; gap: 12px;
+  padding: 9px 12px;
+  background: #171008;
+  border: 1px solid #3d2f1a;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  user-select: none;
+}
+.switch:hover { border-color: var(--copper); }
+.switch.on {
+  background: #2b2010;
+  border-color: var(--brass);
+  box-shadow: inset 0 0 14px rgba(200, 155, 60, 0.18);
+}
+.knobs { display: flex; gap: 4px; flex: none; }
+.knob {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #3a2c15; border: 1px solid #52401f;
+  transition: all 0.2s;
+}
+.switch.on .knob { background: var(--brass-hi); border-color: var(--brass); box-shadow: 0 0 6px rgba(240, 196, 106, 0.8); }
+.switch.on .knob:nth-child(2) { animation-delay: 0.15s; }
+
+.sw-name { font-size: 13.5px; color: var(--steam); }
+.switch.on .sw-name { color: var(--brass-hi); }
+.sw-desc { font-size: 11px; color: #8a7448; margin-left: auto; text-align: right; }
+
+/* ---------- 熔炉 ---------- */
+.furnace { display: flex; flex-direction: column; gap: 18px; }
+.furnace-frame {
+  position: relative;
+  padding: 20px 22px;
+  background: linear-gradient(150deg, #302410, #201708);
+  border: 3px solid var(--brass);
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.65), inset 0 0 0 1px rgba(240, 196, 106, 0.2);
+}
+.furnace-title {
+  font-family: var(--disp); text-align: center;
+  font-size: 17px; letter-spacing: 8px; color: var(--brass-hi);
+  margin-bottom: 16px;
+}
+
+/* 电报纸 */
+.tape-wrap {
+  position: relative;
+  background: #d9c894;
+  border-radius: 4px;
+  padding: 14px 10px 14px 26px;
+  box-shadow: inset 0 0 18px rgba(120, 90, 40, 0.35);
+}
+.tape-sprockets {
+  position: absolute; left: 9px; top: 8px; bottom: 8px; width: 8px;
+  background:
+    radial-gradient(circle at 50% 6px, #a58a4e 3px, transparent 3.5px) 0 0 / 8px 14px repeat-y;
+}
+.tape {
+  font-family: var(--mono);
+  font-size: 13.5px; line-height: 1.85;
+  color: var(--ink);
+  white-space: pre-wrap; word-break: break-word;
+  min-height: 180px; max-height: 340px; overflow-y: auto;
+  padding-right: 6px;
+}
+.tape::-webkit-scrollbar { width: 6px; }
+.tape::-webkit-scrollbar-thumb { background: #a58a4e; border-radius: 4px; }
+.tape.forging { animation: shake 0.4s ease infinite; }
+@keyframes shake {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(1px, -1px); }
+  75% { transform: translate(-1px, 1px); }
+}
+
+/* 拉杆 */
+.lever-zone {
+  display: flex; flex-direction: column; align-items: center;
+  margin: 22px 0 8px; gap: 8px;
+}
+.lever {
+  position: relative; width: 64px; height: 92px;
+  background: transparent; border: none; cursor: pointer;
+}
+.lever-slot {
+  width: 74px; height: 14px; margin-bottom: -80px;
+  background: #0d0904; border-radius: 7px;
+  border: 1px solid #4d3a1c;
+}
+.lever-arm {
+  position: absolute; bottom: 10px; left: 50%;
+  width: 9px; height: 56px;
+  background: linear-gradient(90deg, #6b5220, var(--brass) 45%, #6b5220);
+  border-radius: 4px;
+  transform-origin: bottom center;
+  transform: translateX(-50%) rotate(0deg);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.lever-knob {
+  position: absolute; top: 4px; left: 50%;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ff6b3d, var(--copper) 60%, #5e2f13);
+  transform: translateX(-50%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+}
+.lever.pulled .lever-arm { transform: translateX(-50%) rotate(52deg); }
+.lever.pulled .lever-knob { top: 26px; }
+.lever-tag { font-size: 11px; letter-spacing: 4px; color: var(--copper); }
+
+/* 铭刻按钮 */
+.stamp-row { display: flex; gap: 12px; justify-content: center; margin-top: 14px; }
+.stamp-btn {
+  padding: 10px 22px;
+  font-family: var(--mono); font-size: 13px; letter-spacing: 2px;
+  color: var(--brass-hi);
+  background: linear-gradient(#38290f, #241a0d);
+  border: 2px solid var(--brass); border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #6b4a12;
+  transition: all 0.15s;
+}
+.stamp-btn:hover { background: linear-gradient(#4a3714, #2e2210); }
+.stamp-btn:active { transform: translateY(3px); box-shadow: 0 0 0 #6b4a12; }
+.stamp-btn.warn { border-color: var(--rust); color: #e8a06a; }
+
+/* 机械计数器 */
+.counter {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 14px;
+  background: #171008;
+  border: 2px solid #3d2f1a; border-radius: 10px;
+}
+.counter-wheels { display: flex; gap: 6px; }
+.counter-wheel {
+  width: 38px; height: 50px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 24px; font-weight: 700;
+  color: var(--paper);
+  background: linear-gradient(#0c0803 45%, #241a0d 55%);
+  border: 2px solid #4d3a1c; border-radius: 5px;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.8);
+}
+.counter-cap { font-size: 10.5px; letter-spacing: 3px; color: #8a7448; }
+.counter { flex-direction: row; justify-content: center; gap: 16px; flex-wrap: wrap; }
+
+/* Toast 蒸汽 */
+.toast {
+  position: fixed; top: 24px; left: 50%;
+  transform: translateX(-50%) translateY(-16px);
+  padding: 10px 26px;
+  background: #2b2010; color: var(--brass-hi);
+  border: 2px solid var(--brass); border-radius: 8px;
+  font-family: var(--mono); font-size: 13px; letter-spacing: 2px;
+  opacity: 0; pointer-events: none;
+  transition: all 0.3s; z-index: 50;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
